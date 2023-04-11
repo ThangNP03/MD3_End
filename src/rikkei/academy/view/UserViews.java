@@ -5,9 +5,14 @@ import rikkei.academy.controller.ProductController;
 import rikkei.academy.controller.UserController;
 import rikkei.academy.model.*;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
+
+import static rikkei.academy.config.Config.scanner;
 
 public class UserViews {
+
     ProductController productController = new ProductController();
     UserController userController = new UserController();
     List<User> listUser = userController.findAll();
@@ -15,9 +20,9 @@ public class UserViews {
     public User formLogin() {
         System.out.println("******************* LOGIN *******************");
         System.out.println("Enter your username: ");
-        String username = Config.scanner().nextLine();
+        String username = scanner().nextLine();
         System.out.println("Enter password: ");
-        String password = Config.scanner().nextLine();
+        String password = scanner().nextLine();
         User user = userController.login(username, password);
         if (user == null) {
             System.err.println("Icorrect usernam or password not found");
@@ -27,7 +32,7 @@ public class UserViews {
             System.out.println("3. You don't account register now");
             System.out.println("----------------------------------------------");
             System.out.println("Enter your selection");
-            int choice = Config.scanner().nextInt();
+            int choice = scanner().nextInt();
             if (choice == 2) {
                 ///quên mật khẩu
                 formLogin();
@@ -54,7 +59,7 @@ public class UserViews {
         }
         System.out.println("Enter your username: ");
         while (true) {
-            user.setUsername(Config.scanner().nextLine());
+            user.setUsername(scanner().nextLine());
             if (userController.checkUserNameExit(user.getUsername())) {
                 //tồn tại
                 System.err.println("username is exit!!");
@@ -66,9 +71,9 @@ public class UserViews {
             }
         }
         System.out.println("Enter password: ");
-        user.setPassword(Config.scanner().nextLine());
+        user.setPassword(scanner().nextLine());
         System.out.println("Enter fullName: ");
-        user.setFullName(Config.scanner().nextLine());
+        user.setFullName(scanner().nextLine());
         userController.create(user);
         System.out.println("CREATE SUCCESS!!!");
     }
@@ -81,7 +86,7 @@ public class UserViews {
 
     public void changeUserStatus() {
         System.out.println("Enter id change");
-        int id = Config.scanner().nextInt();
+        int id = scanner().nextInt();
         User user = userController.findById(id);
         if (user == null) {
             System.err.println("id not found");
@@ -96,24 +101,55 @@ public class UserViews {
 
 
     }
+    //update password
+    public void
+    formUpdateUser(User user){
+      while (true) {
+          System.out.print("Enter old password: ");
+          String oldPassword = scanner.nextLine();
+          //Kiểm tra mật khẩu cũ
+          if(!user.getPassword().equals(oldPassword)){
+              System.err.print("Password does not match please re-enter!!!!");
+             continue;
+          }
+          System.out.print("Enter new password: ");
+          String newPassWord = scanner.nextLine();
+          for (User u: listUser) {
+              if (u.getId() == user.getId()){
+                  u.setPassword(newPassWord);
+                  userController.update(u);
+                  break;
+              }
+          }
+          System.out.println("Update password success!!!");
+          break;
+      }
 
+    }
+    //end update password
     public void showListCart(User user) {
+        float total = 0 ;
+
         for (CartItem cart : user.getCart()) {
+
             System.out.println(cart);
+            total+= cart.getProduct().getPrice()*cart.getQuantity();
+            System.out.printf("{product: %s , quantity : %d} \n",cart.getProduct(),cart.getQuantity());
         }
+        System.out.println("Total amount: "+total + " vnd");
     }
 
     public void addToCart(User user) {
         new ProductView().showListProduct();
         List<CartItem> cart = user.getCart();
         System.out.println("Enter product id");
-        int id = Config.scanner().nextInt();
+        int id = scanner().nextInt();
         if (productController.searchProductById(id) == null) {
             System.err.println("id not found ");
         } else {
             Product product = productController.searchProductById(id);
             System.out.println("enter quantity: ");
-            int quantity = Config.scanner().nextInt();
+            int quantity = scanner().nextInt();
             int idNew = (cart.size() == 0) ? 1 : (cart.get(cart.size() - 1).getId() + 1);
             CartItem cartItemNew = new CartItem(idNew, product, quantity);
             if (cart.size() == 0) {
@@ -152,12 +188,12 @@ public class UserViews {
     public void changeQuantytiItem(User user) {
         List<CartItem> cart = user.getCart();
         System.out.println("Enter id cart item change: ");
-        int idCartItem = Config.scanner().nextInt();
+        int idCartItem = scanner().nextInt();
         if (checkCartItemExit(cart, idCartItem)) {
             for (CartItem item : cart) {
                 if (item.getId() == idCartItem) {
                     System.out.println("Enter new quantity ,old quantity " + item.getQuantity());
-                    item.setQuantity(Config.scanner().nextInt());
+                    item.setQuantity(scanner().nextInt());
                     user.setCart(cart);
                     userController.update(user);
                     System.out.println("update success!!!!");
@@ -173,7 +209,7 @@ public class UserViews {
         new ProductView().showListProduct();
         List<CartItem> cart = user.getCart();
         System.out.println("Enter id cart item change: ");
-        int idCartItem = Config.scanner().nextInt();
+        int idCartItem = scanner().nextInt();
         if (checkCartItemExit(cart,idCartItem)){
             for (CartItem item: cart) {
                 //xóa nó
@@ -198,6 +234,6 @@ public class UserViews {
         }
         return false;
     }
-    public  void checkOut(){}
+//    public  void checkOut(){}
 }
 

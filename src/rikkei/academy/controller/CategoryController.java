@@ -23,6 +23,9 @@ public class CategoryController {
     public Category detailCategory(int id){
       return categoryService.findById(id);
     }
+    public void deleteCategory(int id){
+        categoryService.deleteById(id);
+    }
     public List<Category> searchCategoryByName(String name){
         return categoryService.searchCategoryByName(name);
     }

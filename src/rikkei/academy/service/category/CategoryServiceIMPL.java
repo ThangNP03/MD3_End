@@ -37,7 +37,14 @@ public class CategoryServiceIMPL implements ICategoryService {
 
     @Override
     public void deleteById(int id) {
-
+        for (Category c: categoryList) {
+            if (c.getId()==id){
+                categoryList.remove(c);
+                new Config<Category>().writeToFile(Config.PATH_CATEGORY,categoryList);
+                return;
+            }
+        }
+        System.out.println("Id not found! ");
     }
 
 

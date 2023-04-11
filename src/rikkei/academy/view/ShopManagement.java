@@ -6,6 +6,8 @@ import rikkei.academy.model.RoleName;
 import rikkei.academy.model.User;
 import rikkei.academy.service.user.UserServiceIMP;
 
+import static rikkei.academy.config.Config.scanner;
+
 public class ShopManagement {
 
     public static User userLogin = null;
@@ -18,7 +20,7 @@ public class ShopManagement {
         while (true) {
             Navbar.navbarHomePage();
             System.out.print("Enter the choice: ");
-            int choice = Config.scanner().nextInt();
+            int choice = scanner().nextInt();
             switch (choice) {
                 case 1:
                     login();
@@ -50,7 +52,7 @@ public class ShopManagement {
             System.out.println("3. You don't have account, register now");
             System.out.println("------------------------");
             System.out.print("Please enter choice: ");
-            int choice = Config.scanner().nextInt();
+            int choice = scanner().nextInt();
             if (choice == 2) {
                 // quên mật khẩu
                 login();
@@ -78,11 +80,12 @@ public class ShopManagement {
     public static void register() {
         new UserViews().formRegister();
     }
+
     public static void adminViews() {
         while (true) {
             Navbar.navbarAdmin();
             System.out.print("Enter choice: ");
-            int choice = Config.scanner().nextInt();
+            int choice = scanner().nextInt();
             switch (choice) {
                 case 1:
                     categoryManage();
@@ -112,32 +115,40 @@ public class ShopManagement {
     }
 
     public static void customerViews() {
-        Navbar.navbarCustomer();
-        System.out.print("Enter choice: ");
-        int choice = Config.scanner().nextInt();
-        switch (choice) {
-            case 1:
-                new ProductView().showListProduct();
-                customerViews();
+        while (true) {
+            Navbar.navbarCustomer();
+            System.out.print("Enter choice: ");
+            int choice = Integer.parseInt(scanner().nextLine());
+            switch (choice) {
+                case 1:
+                    new ProductView().showListProduct();
+                    break;
+                case 2:
+                    CategoryView.formSearchCategory();
+                    break;
+                case 3:
+                    new ProductView().searchProductsByName();
+                    break;
+                case 4:
+                    cartView();
+
+                    break;
+                case 5:
+                    //orderShow
+                    break;
+                case 6:
+                    //feedback
+                    break;
+                case 7:
+                    new UserViews().formUpdateUser(userLogin);
+                    //UpdateUser
+                    break;
+                default:
+                    System.err.println("Please enter number for 1 to 7: ");
+            }
+            if (choice == 8) {
                 break;
-            case 2:
-                CategoryView.formSearchCategory();
-                customerViews();
-                break;
-            case 3:
-                new ProductView().searchProductsByName();
-                customerViews();
-                break;
-            case 4:
-                cartView();
-                break;
-            case 5:
-                //orderShow
-                break;
-            case 6:
-                break;
-            default:
-                System.err.println("Please enter number for 1 to 5: ");
+            }
         }
     }
 
@@ -146,7 +157,7 @@ public class ShopManagement {
         while (true) {
             Navbar.navbarCategoryManager();
             System.out.print("Enter choice: ");
-            int choice = Config.scanner().nextInt();
+            int choice = Integer.parseInt(scanner().nextLine());
             switch (choice) {
                 case 1:
                     new CategoryView().showFormCategoryList();
@@ -158,6 +169,8 @@ public class ShopManagement {
                     new CategoryView().formUpdateCategory();
                     break;
                 case 4:
+                    new CategoryView().deleteById();
+                case 5:
                     adminViews();
                     break;
                 default:
@@ -170,7 +183,7 @@ public class ShopManagement {
     public static void userManage() {
         Navbar.navbarUserManager();
         System.out.print("Enter choice: ");
-        int choice = Config.scanner().nextInt();
+        int choice = Integer.parseInt(scanner().nextLine());
         switch (choice) {
             case 1:
                 new UserViews().showListUser();
@@ -191,7 +204,7 @@ public class ShopManagement {
     public static void productManage() {
         Navbar.navbarProductManager();
         System.out.println("Enter choice: ");
-        int choice = Config.scanner().nextInt();
+        int choice = Integer.parseInt(scanner().nextLine());
         switch (choice) {
             case 1:
                 new ProductView().showListProduct();
@@ -207,9 +220,12 @@ public class ShopManagement {
                 break;
             case 5:
                 new ProductView().searchProductsByName();
+            case 6:
+                adminViews();
             default:
-                System.err.println("Please enter number for 1 to 5: ");
+                System.err.println("Please enter number for 1 to 6: ");
         }
+
 
     }
 
@@ -217,7 +233,7 @@ public class ShopManagement {
         while (true) {
             Navbar.navbarCart();
             System.out.print("Enter choice: ");
-            int choice = Config.scanner().nextInt();
+            int choice = Integer.parseInt(scanner().nextLine());
             switch (choice) {
                 case 1:
                     new UserViews().showListCart(userLogin);
@@ -234,7 +250,6 @@ public class ShopManagement {
                 case 5:
                     break;
                 case 6:
-
                     break;
                 default:
                     System.err.println("Please enter number for 1 to 5: ");

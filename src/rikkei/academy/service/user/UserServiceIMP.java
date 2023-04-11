@@ -49,21 +49,6 @@ public class UserServiceIMP implements IUserService{
         }
 
     }
-
-
-
-//    @Override
-//    public List<User> searchByName(String searchName) {
-//        List<Category> categoryListSearch = new ArrayList<>();
-//        for (Category category:categoryList) {
-//            if (category.getName().toLowerCase().contains(searchName.toLowerCase())){
-//                categoryListSearch.add(category);
-//            }
-//        }
-//       return categoryListSearch;
-//    }
-
-
     @Override
     public User login(String username, String password) {
         for (User user: listUser) {

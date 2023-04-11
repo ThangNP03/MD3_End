@@ -6,10 +6,12 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Config<T> {
+    public static Scanner scanner = new Scanner(System.in);
     public static Scanner scanner(){
         Scanner scanner = new Scanner(System.in);
         return scanner;
     }
+    public static final String PATH_ODER = "D:\\MD3\\MD3_End_Project\\src\\rikkei\\academy\\database\\oder.txt";
     public static final String PATH_USER = "D:\\MD3\\MD3_End_Project\\src\\rikkei\\academy\\database\\user.txt";
     public static final String PATH_CATEGORY = "D:\\MD3\\MD3_End_Project\\src\\rikkei\\academy\\database\\category.txt";
     public static final String PATH_PRODUCT = "D:\\MD3\\MD3_End_Project\\src\\rikkei\\academy\\database\\product.txt";

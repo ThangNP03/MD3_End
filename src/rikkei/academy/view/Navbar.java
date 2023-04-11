@@ -17,7 +17,8 @@ public class Navbar {
         System.out.println("1. Show Category");
         System.out.println("2. Create Category");
         System.out.println("3. Update Category");
-        System.out.println("4. Exit");
+        System.out.println("4. Delete category by id");
+        System.out.println("5. Exit");
         System.out.println("-----------------------------------------------------");
     }
     public static   void navbarProductManager(){
@@ -57,7 +58,9 @@ public class Navbar {
         System.out.println("3. Search product by product name ");
         System.out.println("4. Cart");
         System.out.println("5. Order show");
-        System.out.println("6.Logout");
+        System.out.println("6. Feedback");
+        System.out.println("7.Update User");
+        System.out.println("8.Logout");
         System.out.println("----------------------------------------------------------");
     }
 
@@ -67,7 +70,7 @@ public class Navbar {
         System.out.println("2. Add product my cart ");
         System.out.println("3. Change quantity");
         System.out.println("4. Delete Items ");
-        System.out.println("5. CheckOut");
+        System.out.println("5. CheckOut - thanh toan");
         System.out.println("6.Exit");
         System.out.println("----------------------------------------------------------");
     }
